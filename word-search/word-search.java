@@ -1,38 +1,38 @@
 class Solution {
     public boolean exist(char[][] board, String word) {
         
-        int n = board.length;
-        int m = board[0].length;
-        
-        for(int i = 0; i < n; i++) {
-            for(int j = 0; j < m; j++) {
+        for(int i = 0; i < board.length; i++) {
+            for(int j = 0; j < board[0].length; j++) {
                 if(board[i][j] == word.charAt(0)) {
-                    if(dfs(board, word, i, j, 0)) {
+                    if(checkWord(word, board, i, j, 0)) {
                         return true;
                     }
                 }
-                
             }
-        }
-                    
+        } 
         return false;
     }
     
-    public boolean dfs(char[][] board, String word, int row, int column, int ind) {
-        if(row < 0 || column <0 || row >=board.length || column >= board[row].length || ind >= word.length() || board[row][column] != word.charAt(ind)) {
+    public boolean checkWord(String word, char[][] board, int row, int col, int ind) {
+        boolean checker = false;
+        
+        if( row < 0 || col < 0 || row >= board.length || col >= board[0].length || board[row][col] != word.charAt(ind)) {
             return false;
         }
         
-        if(ind == word.length()-1) return true;
         
-        char t= board[row][column];
-        board[row][column] = ' ';
+        if(ind == word.length() - 1) {
+            return true;
+        }
         
-        boolean checker = false;
-        checker = dfs(board, word, row - 1, column, ind + 1) || dfs(board, word, row, column - 1 , ind + 1) ||
-                    dfs(board, word, row + 1, column, ind + 1) || dfs(board, word, row, column + 1, ind + 1);
-        board[row][column] = t;
+        char temp = board[row][col];
+        board[row][col] = ' ';
         
+        checker = checkWord(word, board, row - 1, col, ind+1) || checkWord(word, board, row + 1, col, ind+1) ||
+                 checkWord(word, board, row, col - 1, ind+1) ||  checkWord(word, board, row, col + 1, ind+1);
+        
+        board[row][col] = temp;
         return checker;
-    }    
+    }
+    
 }
