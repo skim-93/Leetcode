@@ -18,8 +18,9 @@ class Solution {
         return valid(root, null, null);
     }
     
-    public boolean valid (TreeNode root, TreeNode min, TreeNode max) {
+    public boolean valid(TreeNode root, TreeNode min, TreeNode max) {
         if(root == null) return true;
+        
         if(min != null && min.val >= root.val) return false;
         if(max != null && max.val <= root.val) return false;
         return valid(root.left, min, root) && valid(root.right, root, max);
