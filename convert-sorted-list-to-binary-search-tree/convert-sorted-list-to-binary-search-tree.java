@@ -34,8 +34,8 @@ class Solution {
         if(head == tail) return null;
         
         while(fast.next != tail && fast.next.next != tail) {
-            fast = fast.next.next;
             slow = slow.next;
+            fast = fast.next.next;
         }
         
         TreeNode nhead = new TreeNode(slow.val);
@@ -43,5 +43,7 @@ class Solution {
         nhead.right = toBST(slow.next, tail);
         
         return nhead;
+        
+        
     }
 }
