@@ -9,7 +9,7 @@ class Solution {
     public void dfs(List<List<Integer>> res, int[] nums, List<Integer> curr, boolean[] visited) {
         if(curr.size() == nums.length) {
             res.add(new ArrayList(curr));
-            return; 
+            return;
         }
         
         for(int i = 0; i < nums.length; i++) {
@@ -24,5 +24,7 @@ class Solution {
             visited[i] = false;
             
         }
+        
     }
+    
 }
