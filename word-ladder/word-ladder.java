@@ -1,48 +1,63 @@
 class Solution {
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-        HashSet<String> set = new HashSet();
-        for(String word: wordList) {
+        //first we will add all the word in the list for us to use it for BFS search
+        
+        Set<String> set = new HashSet<>();
+        for(String word : wordList) {
             set.add(word);
         }
         
+        //if the set does not contains endWord, we return 0
         if(!set.contains(endWord)) {
             return 0;
         }
         
-        Queue<String> queue = new LinkedList();
-        queue.offer(beginWord);
+        //for bfs we will be using the queue, to go through each word
+        Queue<String> q = new LinkedList<>();
+        q.offer(beginWord);
         int level = 1;
         
-        while (!queue.isEmpty()) {
-            int size = queue.size();
+        while(!q.isEmpty()) {
+            int currentSize = q.size();
             
-            for(int i = 0; i< size; i++){
-                String current_word = queue.poll();
-                char[] word_chars = current_word.toCharArray();
+            //we will iterate through the current level of the queue, then add all of the 'oneaway' to the queue, and remove it from set to that we do not use it again
+            for(int i = 0; i < currentSize; i++) {
+                //we need to do it for every word within the level, so poll it
+                String currentWord = q.poll();
+                char[] charWord = currentWord.toCharArray();
                 
-                for(int j = 0; j < word_chars.length; j++) {
-                    char original_char = word_chars[j];
+                for(int j = 0; j < charWord.length; j++) {
+                    char originchar = charWord[j];
                     
-                    for(char c = 'a'; c <='z'; c++) {
-                        if(word_chars[j] == c) continue;
-                        word_chars[j] = c;
+                    for(char c = 'a'; c <= 'z'; c++) {
+                        if(charWord[j] == c) continue;
+                        charWord[j] = c;
                         
-                        String new_word = String.valueOf(word_chars);
-                        if(new_word.equals(endWord)) return level + 1;
+                        String newWord = String.valueOf(charWord);
+                        if(newWord.equals(endWord)) return level + 1;
                         
-                        if(set.contains(new_word)) {
-                            queue.offer(new_word);
-                            set.remove(new_word);
+                        if(set.contains(newWord)) {
+                            q.offer(newWord);
+                            set.remove(newWord);
                         }
                     }
-                    word_chars[j] = original_char;
+                    charWord[j] = originchar;
+                    
                 }
+                
+                
             }
+            
+            //after the each level, we up level by 1;
             level++;
+            
+            
         }
+        
+        
         
         return 0;
         
-        
+    
     }
 }
