@@ -4,10 +4,13 @@ class Solution {
         int max = nums[0];
         
         for(int i = 1; i < nums.length; i++) {
-            counter = Math.max(nums[i], counter + nums[i]);
-            if(counter > max) {
-                max = counter;
+            if(nums[i] > counter + nums[i]) {
+                counter = nums[i];
+                
+            } else {
+                counter += nums[i];
             }
+            max = Math.max(counter, max);
         }
         return max;
     }
