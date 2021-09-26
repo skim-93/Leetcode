@@ -18,7 +18,12 @@ class Solution {
         
         memo[target] = total;
         return total;
-        
     }
+    
+    //m = target sum
+    //n = nums.length
+    
+    //time comeplexity = O(n*m^2)
+    //Space comeplxity = O(m^2)
     
 }
