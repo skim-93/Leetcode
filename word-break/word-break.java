@@ -1,24 +1,27 @@
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
         
-        Map<String, Boolean> memo = new HashMap<>();
-        helper(s, memo, wordDict);
-        return helper(s, memo, wordDict);
+        Map<String, Boolean> map = new HashMap();
+        return dfs(s, wordDict, map);
     }
     
-    private boolean helper(String s, Map<String, Boolean> memo, List<String> wordDict) {
-        if (s.isEmpty()) return true;
-
-        boolean composite = false;
+    public boolean dfs(String s, List<String> wordDict, Map<String, Boolean> map) {
+        if(s.length() == 0) {
+            return true;
+        }
         
-        for (String word : wordDict) {
-            if (s.startsWith(word)) {
-                if (!memo.containsKey(s.substring(word.length()))) {
-                    memo.put(s.substring(word.length()), helper(s.substring(word.length()), memo, wordDict));
+        boolean checker = false;
+        
+        for(String word : wordDict) {
+            if(s.startsWith(word)) {
+                String suffix = s.substring(word.length());
+                if(!map.containsKey(suffix)) {
+                    map.put(suffix, dfs(suffix, wordDict, map));
                 }
-                composite = composite || memo.get(s.substring(word.length()));
+                checker = checker || map.get(suffix);
             }
         }
-        return composite;
+        
+        return checker;
     }
 }
