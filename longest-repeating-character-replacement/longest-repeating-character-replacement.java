@@ -1,23 +1,32 @@
 class Solution {
     public int characterReplacement(String s, int k) {
-        int[] char_counts = new int[26];
+        int[] count = new int[26];
+        int left = 0;
+        int max = 0;
         
-        int window_start = 0;
-        int max_length = 0;
-        int max_count = 0;
-        
-        for(int window_end = 0; window_end < s.length(); window_end++) {
-            char_counts[s.charAt(window_end) - 'A']++;
-            int current_char_count = char_counts[s.charAt(window_end) - 'A'];
-            max_count = Math.max(max_count, current_char_count);
+        for(int right = 0; right < s.length(); right++) {
+            count[s.charAt(right) - 'A']++;
             
-            while(window_end - window_start - max_count + 1 > k) {
-                char_counts[s.charAt(window_start) - 'A']--;
-                window_start++;
-            }
+            while(right - left + 1 - getMaxCount(count) > k) {
+                count[s.charAt(left) - 'A']--;
+                left++;
+            } 
             
-            max_length = Math.max(max_length, window_end-window_start + 1);
+            max = Math.max(max, right - left + 1);
         }
-        return max_length;
+        
+        
+        return max;
+    }
+    
+    
+    
+    public int getMaxCount(int[] count) {
+        int max = 0;
+        
+        for(int i : count) {
+            max = Math.max(i, max);
+        }
+        return max;
     }
 }
