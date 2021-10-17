@@ -1,6 +1,5 @@
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
-        
         Map<String, Boolean> map = new HashMap();
         return dfs(s, wordDict, map);
     }
@@ -24,4 +23,5 @@ class Solution {
         
         return checker;
     }
+    
 }
