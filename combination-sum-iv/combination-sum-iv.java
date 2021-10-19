@@ -18,12 +18,7 @@ class Solution {
         
         memo[target] = total;
         return total;
-    }
-    
-    //m = target sum
-    //n = nums.length
-    
-    //time comeplexity = O(n*m^2)
-    //Space comeplxity = O(m^2)
-    
+    }    
 }
+
+// dfs(nums, 4, memo) -> dfs(nums, 3, memo) -> dfs(nums, 2, memo) -> dfs(1) -> dfs(0) -> dfs(-1) -
