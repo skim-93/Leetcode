@@ -1,27 +1,26 @@
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
-        Map<String, Boolean> map = new HashMap();
-        return dfs(s, wordDict, map);
-    }
-    
-    public boolean dfs(String s, List<String> wordDict, Map<String, Boolean> map) {
-        if(s.length() == 0) {
-            return true;
+        int n = s.length();
+        boolean[] dp = new boolean[n + 1];
+        
+        int maxLen = 0;
+        for(String word : wordDict) {
+            maxLen = Math.max(maxLen, word.length());
         }
         
-        boolean checker = false;
-        
-        for(String word : wordDict) {
-            if(s.startsWith(word)) {
-                String suffix = s.substring(word.length());
-                if(!map.containsKey(suffix)) {
-                    map.put(suffix, dfs(suffix, wordDict, map));
+        dp[0] = true;
+        for(int i = 0; i <= n; i ++) {
+            for(int j = i - 1; j >= 0; j--) {
+                if(i - j > maxLen) {
+                    continue;
                 }
-                checker = checker || map.get(suffix);
+                if(dp[j] && wordDict.contains(s.substring(j, i))) {
+                    dp[i] = true;
+                    break;
+                }
             }
         }
         
-        return checker;
-    }
-    
+        return dp[n];
+    }   
 }
